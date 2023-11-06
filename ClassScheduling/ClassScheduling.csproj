@@ -7,8 +7,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Extensions.Standard" Version="8.1.0" />
-  </ItemGroup>
-
 </Project>

@@ -9,7 +9,7 @@ namespace ClassScheduling
         static void Main(string[] args)
         {
             // Set your population size and mutation rate
-            int populationSize = 1500;
+            int populationSize = 500;
             double mutationRate = 0.01;
             var initialDataFactory = new InitialDataFactory();
             var initialData = initialDataFactory.GetInitialData();
@@ -18,7 +18,7 @@ namespace ClassScheduling
 
             var schedules = geneticAlgorithm.GenerateSchedules();
             // Set the number of generations
-            int generations = 100;
+            int generations = 1500;
 
             // Run the genetic algorithm
             Schedule bestSchedule = geneticAlgorithm.Run(generations, schedules);

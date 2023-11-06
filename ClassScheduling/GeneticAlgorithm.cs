@@ -1,11 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-
-namespace ClassScheduling
+﻿namespace ClassScheduling
 {
     public class GeneticAlgorithm
     {
-        //private List<Schedule> population;
         private int populationSize;
         private double mutationRate;
         InitialData InitialData;
@@ -29,7 +25,7 @@ namespace ClassScheduling
                 Schedule schedule = new Schedule();
 
                 // Generate random schedule for each class and assign instructors
-                foreach (var activity in InitialData.Activities) // Replace with your list of class IDs
+                foreach (var activity in InitialData.Activities) 
                 {
                     var room = InitialData.Rooms.RandomElement(random);
 
@@ -243,8 +239,8 @@ namespace ClassScheduling
 
         private bool CheckForDifferenceEqualsTimeSpan(TimeOnly timeOne, TimeOnly timeTwo, TimeSpan timeSpan)
         {
-            return (timeOne > timeTwo && (timeOne - timeTwo).Equals(timeSpan)
-            || (timeTwo > timeOne && (timeTwo - timeOne).Equals(timeSpan)));
+            return (timeOne >= timeTwo && (timeOne - timeTwo).Equals(timeSpan)
+            || (timeTwo >= timeOne && (timeTwo - timeOne).Equals(timeSpan)));
         }
 
         private bool CheckForDifferenceGreaterThanTimeSpan(TimeOnly timeOne, TimeOnly timeTwo, TimeSpan timeSpan)
@@ -278,8 +274,6 @@ namespace ClassScheduling
         // Perform mutation operation on a schedule
         private void Mutate(Schedule schedule)
         {
-            // Implement mutation logic to modify the schedule
-            // You can randomly change room or time slot for a class based on the mutation rate
             Random random = new Random();
 
             var randomActivity = random.Next(schedule.ClassSchedule.Count);
@@ -310,10 +304,11 @@ namespace ClassScheduling
                 
                 // Sort the population by fitness in descending order
                 population.Sort((a, b) => b.Fitness.CompareTo(a.Fitness));
+                
                 Console.WriteLine($"Top fitness value: {population[0].Fitness}");
                 // Perform selection, crossover, and mutation to create the next generation
                 List<Schedule> newPopulation = new List<Schedule>();
-
+                var populationFitness = population.Select(x => x.Fitness);
                 for (int i = 0; i < population.Count; i++)
                 {
                     var parents = SelectParents(population);
@@ -333,7 +328,7 @@ namespace ClassScheduling
 
                 population = newPopulation;
             }
-
+            //Evaluate Final population
             EvaluateFitness(population);
             // Return the best schedule after running the genetic algorithm
             return population.OrderByDescending(x=>x.Fitness).First();
